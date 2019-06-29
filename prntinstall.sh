@@ -14,7 +14,7 @@ echo "   ********************************************************************* "
 echo "   Script de instalação das impressoras do campus Pelotas.               "
 echo "    - O padrão de compartilhamento é o [cpcxxxx]_[modelo da impressora]. "
 echo "    - O compartilhamento pode ser conferido entrando no SGI.             " 
-echo "                                                                         "
+
 	Modelo=7
 	while [Modelo -eq 7 -or modelo -lt 1];
 		do
