@@ -29,6 +29,6 @@ echo "                                                                         "
 		read Modelo
 		done
 
-done
+
 
 	lpadmin -p $1 -E -v smb://sgi/$1 -m drv:///sample.drv/generic.ppd
