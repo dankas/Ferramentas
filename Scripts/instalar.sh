@@ -18,13 +18,14 @@ echo "    - O compartilhamento pode ser conferido entrando no SGI.             "
 echo "    - Em caso de erro 'Bad device-uri' instale o smbclient (apt install smbclient)." 
 echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser visto
 			  na própria impressora."
-
+	
 	INDEX_MODELO_IMPRESSORA=-1
 	CPC_IMPRESSORA="cpcxxxx"
 	MODELO_IMPRESSORA=([1]="MPC300" [2]="SPC431" [3]="MP201" [4]="SP4510SF" [5]="MPCW2200" [6]="MPC401" [7]="MPC2003")
-	echo $INDEX_MODELO_IMPRESSORA
-	echo $CPC_IMPRESSORA
-	echo ${MODELO_IMPRESSORA[1]}
+	
+	#O usuário entra com o índice de um ARRAY que possui o nome correto do compartilhamento de cada modelo de impressora
+	#Preferi fazer desta forma para minimizar possíveis erros de digitação dos usuários
+	#Enquanto o usuário não entrar com uma opção dentro do "RANGE" o loop fica repetindo o pedido de opção correta.
 	while :
 		do
 			if [[ $INDEX_MODELO_IMPRESSORA -lt 8 && $INDEX_MODELO_IMPRESSORA -gt 0 ]]
@@ -41,13 +42,35 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 			echo "		7 - MPC 2003"
 
 			read INDEX_MODELO_IMPRESSORA;
-			#validar()
+			#validar(), no futuro vou implantar uma validação de "tipo" da entrada, por enquanto uso a do intrepretador.
+			#se alguem tentar entrar com uma string o interpretador gera erro e o menu repete. mas se entrar com um numero
+			#com virgula o script quebra. 
 
 		done
-echo ${MODELO_IMPRESSORA[$INDEX_MODELO_IMPRESSORA]}
-echo "	Entre com o CPC da impressora/multifuncional:"
-read CPC_IMPRESSORA
-COMPARTILHAMENTO=${CPC_IMPRESSORA}_${MODELO_IMPRESSORA[$INDEX_MODELO_IMPRESSORA]}
-echo $COMPARTILHAMENTO
 
-	lpadmin -p $COMPARTILHAMENTO -E -v smb://sgi/$COMPARTILHAMENTO -m drv:///sample.drv/generic.ppd
+	echo "	Entre com o CPC da impressora/multifuncional:"
+
+		read CPC_IMPRESSORA
+
+	#Concatenação do CPC da impressora e o compartilhamento, isso gera o nome do compartilhamento no padrão 
+	#correto: [cpcxxxx]_[modelo da impressora].
+
+	COMPARTILHAMENTO=${CPC_IMPRESSORA}_${MODELO_IMPRESSORA[$INDEX_MODELO_IMPRESSORA]}
+
+			
+	echo "	Compartilhamento selecionado: $COMPARTILHAMENTO"
+	echo "	Se estiver incorreto saia do script (CTRL+C) e rode-o novamente."
+
+	#Baixa o driver correspondente, por enquanto do meu PC e portanto se ele estiver off teremos erro.
+	#No futuro será do SGI e estara sempre on-line.
+
+	echo "	Baixando driver:"
+	echo ""
+		wget http://cpclista:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
+	echo ""
+	
+	echo "Instalando a impressora:"
+	
+	#O lpadmin é o comando que instala a impressora, a opção "-P" está depreciada, mas é a melhor opção neste caso.
+	
+		lpadmin -p $COMPARTILHAMENTO -E -v smb://sgi/$COMPARTILHAMENTO -P $INDEX_MODELO_IMPRESSORA.ppd
