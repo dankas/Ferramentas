@@ -1,7 +1,7 @@
 #!/bin/bash 
 	clear
-echo "   ********************************************************************* "
-echo "  	                                                                   
+echo -e " \e[01;37m  ********************************************************************* \e[00m"
+echo -e " \e[01;37m 	                                                                   
                ___                                                  
               / (_)                                                 
              |      __   _  _  _     _          __   __   _  _  _   
@@ -10,9 +10,9 @@ echo "
                                   /|                                
                                   \|  
 																	       
-																		   "
-echo "   ********************************************************************* "
-echo "   Script de instalação das impressoras do campus Pelotas.               "
+  \e[00m"
+echo -e "\e[01;37m   ********************************************************************* \e[00m"
+echo -e "   \e[01;37mScript de instalação das impressoras do campus Pelotas\e[00m.               "
 echo "    - O padrão de compartilhamento é o [cpcxxxx]_[modelo da impressora]. "
 echo "    - O compartilhamento pode ser conferido entrando no SGI.             " 
 echo "    - Em caso de erro 'Bad device-uri' instale o smbclient (apt install smbclient)." 
@@ -32,7 +32,7 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 				then
 					break;
 			fi
-			echo " 	Entre com o numero relacionado ao modelo da impressora/multifuncional: "
+			echo -e " 	\e[01;37mEntre com o numero relacionado ao modelo da impressora/multifuncional:\e[00m "
 			echo "		1 - MPC 300sr."
 			echo "		2 - SP  431."
 			echo "		3 - MP  201."
@@ -48,7 +48,7 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 
 		done
 
-	echo "	Entre com o CPC da impressora/multifuncional:"
+	echo -e "	\e[01;37mEntre com o CPC da impressora/multifuncional:\e[00m"
 
 		read CPC_IMPRESSORA
 
@@ -58,18 +58,19 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 	COMPARTILHAMENTO=${CPC_IMPRESSORA}_${MODELO_IMPRESSORA[$INDEX_MODELO_IMPRESSORA]}
 
 			
-	echo "	Compartilhamento selecionado: $COMPARTILHAMENTO"
+	echo -e "	\e[01;37mCompartilhamento selecionado:\e[00m \e[01;36m$COMPARTILHAMENTO\e[00m"
 	echo "	Se estiver incorreto saia do script (CTRL+C) e rode-o novamente."
+	sleep 3
 
 	#Baixa o driver correspondente, por enquanto do meu PC e portanto se ele estiver off teremos erro.
 	#No futuro será do SGI e estara sempre on-line.
 
-	echo "	Baixando driver:"
+	echo -e "	\e[01;37mBaixando driver:\e[00m"
 	echo ""
 		wget http://cpclista:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
 	echo ""
 	
-	echo "Instalando a impressora:"
+	echo -e "\e[01;37mInstalando a impressora:\e[00m"
 	
 	#O lpadmin é o comando que instala a impressora, a opção "-P" está depreciada, mas é a melhor opção neste caso.
 	
