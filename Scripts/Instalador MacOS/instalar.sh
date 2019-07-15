@@ -16,7 +16,7 @@ echo "  ********************************************************************* "
 echo "   Script de instalação das impressoras do campus Pelotas.               "
 echo "    - O padrão de compartilhamento é o [cpcxxxx]_[modelo da impressora]. "
 echo "    - O compartilhamento pode ser conferido entrando no SGI.             "
-echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser visto
+echo "    - O modelo da impressora está disponivel no http://sgi:8000 ou pode ser visto
 			  na própria impressora."
 
 	INDEX_MODELO_IMPRESSORA=-1
@@ -62,12 +62,11 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 	echo "	Se estiver incorreto saia do script (CTRL+C) e rode-o novamente."
 	sleep 3
 
-	#Baixa o driver correspondente, por enquanto do meu PC e portanto se ele estiver off teremos erro.
-	#No futuro será do SGI e estara sempre on-line.
+	#Baixa o driver correspondente do SGI.
 
 	echo -e "	Baixando driver:"
 	echo ""
-		curl -O http://cpclista:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
+		curl -O http://sgi:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
 	echo ""
 
 	echo -e "Instalando a impressora:"

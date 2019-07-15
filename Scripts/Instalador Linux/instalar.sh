@@ -1,4 +1,7 @@
 #!/bin/bash 
+	#Instala o SMB client, necessário para instalar corretamente por compartilhamento windows.
+	#será necessária a senha de ROOT.
+	sudo apt install smbclient
 	clear
 echo -e " \e[01;37m  ********************************************************************* \e[00m"
 echo -e " \e[01;37m 	                                                                   
@@ -15,8 +18,7 @@ echo -e "\e[01;37m   ***********************************************************
 echo -e "   \e[01;37mScript de instalação das impressoras do campus Pelotas\e[00m.               "
 echo "    - O padrão de compartilhamento é o [cpcxxxx]_[modelo da impressora]. "
 echo "    - O compartilhamento pode ser conferido entrando no SGI.             " 
-echo "    - Em caso de erro 'Bad device-uri' instale o smbclient (apt install smbclient)." 
-echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser visto
+echo "    - O modelo da impressora está disponivel no http://sgi:8000 ou pode ser visto
 			  na própria impressora."
 	
 	INDEX_MODELO_IMPRESSORA=-1
@@ -62,12 +64,11 @@ echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser vist
 	echo "	Se estiver incorreto saia do script (CTRL+C) e rode-o novamente."
 	sleep 3
 
-	#Baixa o driver correspondente, por enquanto do meu PC e portanto se ele estiver off teremos erro.
-	#No futuro será do SGI e estará sempre on-line.
+	#Baixa o driver correspondente do SGI.
 
 	echo -e "	\e[01;37mBaixando driver:\e[00m"
 	echo ""
-		wget http://cpclista:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
+		wget http://sgi:8000/assets/ppd/$INDEX_MODELO_IMPRESSORA.ppd
 	echo ""
 	
 	echo -e "\e[01;37mInstalando a impressora:\e[00m"
