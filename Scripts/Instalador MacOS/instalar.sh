@@ -1,7 +1,7 @@
 #!/bin/bash
 
 	clear
-echo  "  ********************************************************************* \e[00m"
+echo  "  *********************************************************************"
 echo  "
                ___
               / (_)
@@ -13,10 +13,9 @@ echo  "
 
   "
 echo "  ********************************************************************* "
-echo "   Script de instalação das impressoras do campus Pelotas\e[00m.               "
+echo "   Script de instalação das impressoras do campus Pelotas.               "
 echo "    - O padrão de compartilhamento é o [cpcxxxx]_[modelo da impressora]. "
 echo "    - O compartilhamento pode ser conferido entrando no SGI.             "
-echo "    - Em caso de erro 'Bad device-uri' instale o smbclient (apt install smbclient)."
 echo "    - O modelo da impressora está disponivel no CPCLISTA ou pode ser visto
 			  na própria impressora."
 
